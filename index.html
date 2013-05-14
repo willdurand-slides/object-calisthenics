@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>Object Calisthenics</title>
         <link rel="stylesheet" href="reveal.js/css/reveal.min.css">
         <link rel="stylesheet" href="reveal.js/css/theme/serif.css" id="theme">
         <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
@@ -17,15 +17,169 @@
         <div class="reveal">
             <div class="slides">
                 <section>
-                    <h1></h1>
-                    <em></em>
+                    <h1>Object Calisthenics</h1>
+                    <em>Your code sucks, let's fix it!</em>
                 </section>
                 <section>
                     <section data-markdown>
                         <script type="text/template">
+                            ## Object
+
+                            Related to Object Oriented Programming.
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Calisthenics
+
+                            Term derived from greek, _exercise_,<br>under the context of gymnastics.
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Object Calisthenics
+
+                            **Jeff Bay**, in **The ThoughtWorks Anthology**, lists
+                            **9 rules** to writing better Object Oriented code.
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Motivation
+
+                            Readable Code, Comprehensible, Testable, Maintainable.
                         </script>
                     </section>
                 </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 1. Only One Level Of Indentation Per Method
+                        </script>
+                    </section>
+                    <section>
+                        <h2>WTF?</h2>
+
+                        <pre><code class="java">class Board {
+    String board() {
+        StringBuffer buf = new StringBuffer();
+
+        // 0
+        for (int i = 0; i < 10; i++) {
+            // 1
+            for (int j = 0; j < 10; j++) {
+                // 2
+                buf.append(data[i][j]);
+            }
+            buf.append("\n");
+        }
+
+        return buf.toString();
+    }
+}</code></pre>
+                    </section>
+                    <section>
+                        <h2>Extract Method</h2>
+
+                        <pre><code class="java">class Board {
+    String board() {
+        StringBuffer buf = new StringBuffer();
+        collectRows(buf);
+        return buf.toString();
+    }
+
+    void collectRows(StringBuffer buf) {
+        for (int i = 0; i < 10; i++) { collectRow(buf, i); }
+    }
+
+    void collectRow(StringBuffer buf, int row) {
+        for (int i = 0; i < 10; i++) { buf.append(data[row][i]); }
+        buf.append("\n");
+    }
+}</code></pre>
+                        <small>
+                            <a href="http://refactoring.com/catalog/extractMethod.html">http://refactoring.com/catalog/extractMethod.html</a>
+                        </small>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 2. Don’t Use The<br>ELSE Keyword
+                        </script>
+                    </section>
+                    <section>
+                        <h2>Problem</h2>
+                        <pre><code class="java">void login(String username, String password) {
+    if (userRepository.isValid(username, password)) {
+        redirect('homepage');
+    } else {
+        addFlash('error', 'Bad credentials');
+
+        redirect('login');
+    }
+}</code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 3. Wrap All Primitives<br>And Strings
+                        </script>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 4. First Class Collections
+                        </script>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 5. One Dot Per Line
+                        </script>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 6. Don’t Abbreviate
+                        </script>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 7. Keep All Entities Small
+                        </script>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 8. No Classes With More Than Two Instance Variables
+                        </script>
+                    </section>
+                </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## 9. No Getters/Setters/Properties
+                        </script>
+                    </section>
+                </section>
+
             </div>
         </div>
         <script type="text/javascript" src="reveal.js/lib/js/head.min.js"></script>
