@@ -1,0 +1,16 @@
+.no-border {
+    border: none !important;
+}
+
+.source {
+    font-style: italic !important;
+    font-size: 50% !important;
+}
+
+.me {
+    text-align: center !important;
+}
+
+.me li {
+    list-style-type: none;
+}

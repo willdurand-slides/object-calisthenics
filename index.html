@@ -3,7 +3,7 @@
     <head>
         <title>Object Calisthenics</title>
         <link rel="stylesheet" href="reveal.js/css/reveal.min.css">
-        <link rel="stylesheet" href="reveal.js/css/theme/serif.css" id="theme">
+        <link rel="stylesheet" href="reveal.js/css/theme/solarized.css" id="theme">
         <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
         <link rel="stylesheet" href="css/custom.css">
         <script>
@@ -55,11 +55,11 @@
                 <section>
                     <section data-markdown>
                         <script type="text/template">
-                            ## 1. Only One Level Of Indentation Per Method
+                            ## 1. Only One Level Of<br>Indentation Per Method
                         </script>
                     </section>
                     <section>
-                        <h2>WTF?</h2>
+                        <h2>Yay!</h2>
 
                         <pre><code class="java">class Board {
     String board() {
@@ -81,7 +81,6 @@
                     </section>
                     <section>
                         <h2>Extract Method</h2>
-
                         <pre><code class="java">class Board {
     String board() {
         StringBuffer buf = new StringBuffer();
@@ -107,11 +106,11 @@
                 <section>
                     <section data-markdown>
                         <script type="text/template">
-                            ## 2. Don’t Use The<br>ELSE Keyword
+                            ## 2. Don’t Use The ELSE Keyword
                         </script>
                     </section>
                     <section>
-                        <h2>Problem</h2>
+                        <h2>Example</h2>
                         <pre><code class="java">void login(String username, String password) {
     if (userRepository.isValid(username, password)) {
         redirect('homepage');
@@ -122,12 +121,63 @@
     }
 }</code></pre>
                     </section>
+                    <section>
+                        <h2>Early Return</h2>
+                        <pre><code class="java">void login(String username, String password) {
+    if (!userRepository.isValid(username, password)) {
+        addFlash('error', 'Bad credentials');
+
+        return redirect('login');
+    }
+
+    redirect('homepage');
+}</code></pre>
+                    </section>
+                    <section>
+                        <h2>Variable</h2>
+                        <pre><code class="java">void login(String username, String password) {
+    String redirectRoute = 'homepage';
+
+    if (!userRepository.isValid(username, password)) {
+        addFlash('error', 'Bad credentials');
+        redirectRoute = 'login';
+    }
+
+    redirect(redirectRoute);
+}</code></pre>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## But Also
+
+                            * Polymorphism
+                            * Null Object Pattern
+                            * Strategy Pattern
+                            * State Pattern
+                        </script>
+                    </section>
                 </section>
 
                 <section>
                     <section data-markdown>
                         <script type="text/template">
-                            ## 3. Wrap All Primitives<br>And Strings
+                            ## 3. Wrap All Primitives And Strings
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            Encapsulate all the primitives within objects.
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            If the variable of primitive type has a **behavior**,
+                            <br>it **MUST** be encapsulated.
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            It is especially _true_ for **Domain Driven Design**.
                         </script>
                     </section>
                 </section>
@@ -138,6 +188,19 @@
                             ## 4. First Class Collections
                         </script>
                     </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            Any class that contains a collection should contain
+                            <br>no other member variables.
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            Each collection gets wrapped in its own class, so now behaviors related to
+                            the collection have a home.
+                            <br>(e.g. filter methods, applying a rule to each element)
+                        </script>
+                    </section>
                 </section>
 
                 <section>
@@ -146,12 +209,105 @@
                             ## 5. One Dot Per Line
                         </script>
                     </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Law of Demeter
+
+                            Only talk to your immediate friends, don't talk to strangers.
+                        </script>
+                    </section>
+                    <section>
+                        <h2>Example</h2>
+                        <pre><code class="java">class Location {                    class Piece {
+    public Piece current;               public String representation;
+}                                   }
+
+class Board {
+    public String boardRepresentation() {
+        StringBuffer buf = new StringBuffer();
+
+        for (Location loc : squares()) {
+            buf.append(loc.current.representation.substring(0, 1));
+        }
+
+        return buf.toString();
+    }
+}</code></pre>
+                    </section>
+                    <section>
+                        <img src="images/wrong-way.jpg" class="no-border" />
+                        <p class="source">Image via Flickr user CarbonNYC</p>
+                    </section>
+                    <section>
+                        <h2>Talk To Your Friends!</h2>
+                        <pre><code class="java">class Location {
+    private Piece current;
+
+    public void addTo(StringBuffer buf) { current.addTo(buf); }
+}
+
+class Piece {
+    private String representation;
+
+    public String character() {
+        return representation.substring(0, 1);
+    }
+
+    public void addTo(StringBuffer buf) {
+        buf.append(character());
+    }
+}</code></pre>
+                    </section>
+                    <section>
+                        <h2>Talk To Your Friends!</h2>
+                        <pre><code class="java">// Before:
+// buf.append(loc.current.representation.substring(0, 1));
+
+// After:
+class Board {
+    String boardRepresentation() {
+        StringBuffer buf = new StringBuffer();
+
+        for (Location location : squares()) {
+            location.addTo(buf);
+        }
+
+        return buf.toString();
+    }
+}</code></pre>
+                    </section>
                 </section>
 
                 <section>
                     <section data-markdown>
                         <script type="text/template">
                             ## 6. Don’t Abbreviate
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Why Do You Want To Abbreviate?
+                        </script>
+                    </section>
+                    <section>
+                        <h2>Write The Same Name<br>Over And Over Again?</h2>
+
+                        <p class="fragment">Then, your method is reused multiple times.</p>
+                        <p class="fragment">Looks like <strong>code duplication</strong>.</p>
+                    </section>
+                    <section>
+                        <h2>Method Name Too Long?</h2>
+
+                        <p class="fragment">Maybe your class has multiple responsabilities.</p>
+                        <p class="fragment">Violation of the <strong>Single Responsibility Principle</strong>.</p>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            > If you can't find a good name for a class or a method,
+                            > something is probably wrong with your conception.
+                            > Rethink!
+
+                            <em><small>Me – 2 hours ago</small></em>
                         </script>
                     </section>
                 </section>
@@ -162,6 +318,11 @@
                             ## 7. Keep All Entities Small
                         </script>
                     </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            No class over **50 lines** and no package over 10 files.
+                        </script>
+                    </section>
                 </section>
 
                 <section>
@@ -169,6 +330,25 @@
                         <script type="text/template">
                             ## 8. No Classes With More Than Two Instance Variables
                         </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Yes, I know!
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Why?
+
+                            Low cohesion, better encapsulation.
+                        </script>
+                    </section>
+                    <section>
+                        <h2>Example</h2>
+                        <img src="images/2-instance-variables.png" />
+                        <a class="source" href="https://github.com/TheLadders/object-calisthenics#rule-8-no-classes-with-more-than-two-instance-variables">
+                            https://github.com/TheLadders/object-calisthenics#rule-8-no-classes-with-more-than-two-instance-variables
+                        </a>
                     </section>
                 </section>
 
@@ -178,8 +358,68 @@
                             ## 9. No Getters/Setters/Properties
                         </script>
                     </section>
-                </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            Getters/Setters violate the **Open/Closed Principle**.
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Getters/Setters Are Evil
 
+                                // Game
+                                private int score;
+
+                                public void setScore(int score) {
+                                    this.score = score;
+                                }
+
+                                public int getScore() {
+                                    return score;
+                                }
+
+                                // Usage
+                                // WTF?!
+                                game.setScore(game.getScore() + ENEMY_DESTROYED_SCORE);
+
+                            <span></span>
+
+                                // Game
+                                public void addScore(int delta) {
+                                    score += delta;
+                                }
+
+                                // Usage
+                                game.addScore(ENEMY_DESTROYED_SCORE);
+
+                            <small>
+                                <a href="http://stackoverflow.com/questions/565095/are-getters-and-setters-evil">http://stackoverflow.com/questions/565095/are-getters-and-setters-evil</a>
+                                <a href="http://whitewashing.de/2012/08/22/building_an_object_model__no_setters_allowed.html">http://whitewashing.de/2012/08/22/building_an_object_model__no_setters_allowed.html</a>
+                            </small>
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            Tell, don’t ask.
+
+                            <small>
+                                <a href="http://pragprog.com/articles/tell-dont-ask">http://pragprog.com/articles/tell-dont-ask</a>
+                            </small>
+                        </script>
+                    </section>
+                </section>
+                <section data-markdown>
+                    <script type="text/template">
+                        ## Thank You, Questions?
+
+                        <br>
+                        <ul class="me">
+                            <li><a href="http://williamdurand.fr" title="website">williamdurand.fr</a></li>
+                            <li><a href="https://github/willdurand" title="github">github.com/willdurand</a></li>
+                            <li><a href="https://twitter.com/couac" title="twitter">twitter.com/couac</a></li>
+                        </ul>
+                    </script>
+                </section>
             </div>
         </div>
         <script type="text/javascript" src="reveal.js/lib/js/head.min.js"></script>
