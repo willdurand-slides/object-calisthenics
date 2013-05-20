@@ -25,7 +25,7 @@
                         <script type="text/template">
                             ## Object
 
-                            Related to Object Oriented Programming.
+                            Related to **O**bject **O**riented **P**rogramming.
                         </script>
                     </section>
                     <section data-markdown>
@@ -61,7 +61,7 @@
                     <section>
                         <h2>Yay!</h2>
 
-                        <pre><code class="java">class Board {
+                        <pre><code class="java highlight-comments">class Board {
     String board() {
         StringBuffer buf = new StringBuffer();
 
@@ -167,6 +167,10 @@
                     <section data-markdown>
                         <script type="text/template">
                             Encapsulate all the primitives within objects.
+
+                            <small>
+                                <a href="http://c2.com/cgi/wiki?PrimitiveObsession">http://c2.com/cgi/wiki?PrimitiveObsession</a>
+                            </small>
                         </script>
                     </section>
                     <section data-markdown>
@@ -196,9 +200,11 @@
                     </section>
                     <section data-markdown>
                         <script type="text/template">
-                            Each collection gets wrapped in its own class, so now behaviors related to
+                            Each **collection** gets wrapped **in its own class**, so now behaviors related to
                             the collection have a home.
-                            <br>(e.g. filter methods, applying a rule to each element)
+
+                            <br>
+                            (e.g. filter methods, applying a rule to each element)
                         </script>
                     </section>
                 </section>
@@ -213,7 +219,7 @@
                         <script type="text/template">
                             ## Law of Demeter
 
-                            Only talk to your immediate friends, don't talk to strangers.
+                            Only talk to your **immediate friends**, don't talk to strangers.
                         </script>
                     </section>
                     <section>
@@ -233,10 +239,6 @@ class Board {
         return buf.toString();
     }
 }</code></pre>
-                    </section>
-                    <section>
-                        <img src="images/wrong-way.jpg" class="no-border" />
-                        <p class="source">Image via Flickr user CarbonNYC</p>
                     </section>
                     <section>
                         <h2>Talk To Your Friends!</h2>
@@ -286,24 +288,24 @@ class Board {
                     </section>
                     <section data-markdown>
                         <script type="text/template">
-                            ## Why Do You Want To Abbreviate?
+                            ### Why Do You Want To Abbreviate?
                         </script>
                     </section>
                     <section>
-                        <h2>Write The Same Name<br>Over And Over Again?</h2>
+                        <h3>Write The Same Name Over And Over Again?</h3>
 
                         <p class="fragment">Then, your method is reused multiple times.</p>
                         <p class="fragment">Looks like <strong>code duplication</strong>.</p>
                     </section>
                     <section>
-                        <h2>Method Name Too Long?</h2>
+                        <h3>Method Name Too Long?</h3>
 
                         <p class="fragment">Maybe your class has multiple responsabilities.</p>
                         <p class="fragment">Violation of the <strong>Single Responsibility Principle</strong>.</p>
                     </section>
                     <section data-markdown>
                         <script type="text/template">
-                            > If you can't find a good name for a class or a method,
+                            > If you can't find a decent name for a class or a method,
                             > something is probably wrong with your conception.
                             > Rethink!
 
@@ -362,6 +364,17 @@ class Board {
                     </section>
                     <section data-markdown>
                         <script type="text/template">
+                            Tell, don’t ask.
+
+                            <small>
+                                <a href="http://pragprog.com/articles/tell-dont-ask">http://pragprog.com/articles/tell-dont-ask</a>
+                                <br>
+                                <a href="http://c2.com/cgi/wiki?TellDontAsk">http://c2.com/cgi/wiki?TellDontAsk</a>
+                            </small>
+                        </script>
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
                             Getters/Setters violate the **Open/Closed Principle**.
                         </script>
                     </section>
@@ -381,7 +394,6 @@ class Board {
                                 }
 
                                 // Usage
-                                // WTF?!
                                 game.setScore(game.getScore() + ENEMY_DESTROYED_SCORE);
 
                             <span></span>
@@ -396,16 +408,8 @@ class Board {
 
                             <small>
                                 <a href="http://stackoverflow.com/questions/565095/are-getters-and-setters-evil">http://stackoverflow.com/questions/565095/are-getters-and-setters-evil</a>
+                                <br>
                                 <a href="http://whitewashing.de/2012/08/22/building_an_object_model__no_setters_allowed.html">http://whitewashing.de/2012/08/22/building_an_object_model__no_setters_allowed.html</a>
-                            </small>
-                        </script>
-                    </section>
-                    <section data-markdown>
-                        <script type="text/template">
-                            Tell, don’t ask.
-
-                            <small>
-                                <a href="http://pragprog.com/articles/tell-dont-ask">http://pragprog.com/articles/tell-dont-ask</a>
                             </small>
                         </script>
                     </section>
