@@ -11,3 +11,7 @@
     color: red;
     font-weight: bold;
 }
+
+blockquote {
+    text-align: justify;
+}
