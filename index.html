@@ -62,7 +62,7 @@
                         <h2>Yay!</h2>
 
                         <pre><code class="java highlight-comments">class Board {
-    String board() {
+    public String board() {
         StringBuffer buf = new StringBuffer();
 
         // 0
@@ -82,17 +82,17 @@
                     <section>
                         <h2>Extract Method</h2>
                         <pre><code class="java">class Board {
-    String board() {
+    public String board() {
         StringBuffer buf = new StringBuffer();
         collectRows(buf);
         return buf.toString();
     }
 
-    void collectRows(StringBuffer buf) {
+    private void collectRows(StringBuffer buf) {
         for (int i = 0; i < 10; i++) { collectRow(buf, i); }
     }
 
-    void collectRow(StringBuffer buf, int row) {
+    private void collectRow(StringBuffer buf, int row) {
         for (int i = 0; i < 10; i++) { buf.append(data[row][i]); }
         buf.append("\n");
     }
@@ -111,7 +111,7 @@
                     </section>
                     <section>
                         <h2>Example</h2>
-                        <pre><code class="java">void login(String username, String password) {
+                        <pre><code class="java">public void login(String username, String password) {
     if (userRepository.isValid(username, password)) {
         redirect('homepage');
     } else {
@@ -123,7 +123,7 @@
                     </section>
                     <section>
                         <h2>Early Return</h2>
-                        <pre><code class="java">void login(String username, String password) {
+                        <pre><code class="java">public void login(String username, String password) {
     if (!userRepository.isValid(username, password)) {
         addFlash('error', 'Bad credentials');
 
@@ -135,7 +135,7 @@
                     </section>
                     <section>
                         <h2>Variable</h2>
-                        <pre><code class="java">void login(String username, String password) {
+                        <pre><code class="java">public void login(String username, String password) {
     String redirectRoute = 'homepage';
 
     if (!userRepository.isValid(username, password)) {
@@ -200,8 +200,8 @@
                     </section>
                     <section data-markdown>
                         <script type="text/template">
-                            Each **collection** gets wrapped **in its own class**, so now behaviors related to
-                            the collection have a home.
+                            Each **collection** gets wrapped **in its own class**, so now behaviors
+                            related to the collection have a home.
 
                             <br>
                             (e.g. filter methods, applying a rule to each element)
@@ -267,7 +267,7 @@ class Piece {
 
 // After:
 class Board {
-    String boardRepresentation() {
+    public String boardRepresentation() {
         StringBuffer buf = new StringBuffer();
 
         for (Location location : squares()) {
@@ -353,7 +353,8 @@ class Board {
                         </script>
                     </section>
                     <section>
-                        <h2>Example</h2>
+                        <h2>How?</h2>
+
                         <img src="images/2-instance-variables.png" />
                         <small>
                             <a href="https://github.com/TheLadders/object-calisthenics#rule-8-no-classes-with-more-than-two-instance-variables">
