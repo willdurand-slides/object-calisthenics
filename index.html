@@ -63,7 +63,7 @@
 
                         <pre><code class="java highlight-comments">class Board {
     public String board() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
 
         // 0
         for (int i = 0; i < 10; i++) {
@@ -83,16 +83,16 @@
                         <h2>Extract Method</h2>
                         <pre><code class="java">class Board {
     public String board() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         collectRows(buf);
         return buf.toString();
     }
 
-    private void collectRows(StringBuffer buf) {
+    private void collectRows(StringBuilder buf) {
         for (int i = 0; i < 10; i++) { collectRow(buf, i); }
     }
 
-    private void collectRow(StringBuffer buf, int row) {
+    private void collectRow(StringBuilder buf, int row) {
         for (int i = 0; i < 10; i++) { buf.append(data[row][i]); }
         buf.append("\n");
     }
@@ -230,7 +230,7 @@
 
 class Board {
     public String boardRepresentation() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
 
         for (Location loc : squares()) {
             buf.append(loc.current.representation.substring(0, 1));
@@ -245,7 +245,7 @@ class Board {
                         <pre><code class="java">class Location {
     private Piece current;
 
-    public void addTo(StringBuffer buf) { current.addTo(buf); }
+    public void addTo(StringBuilder buf) { current.addTo(buf); }
 }
 
 class Piece {
@@ -255,7 +255,7 @@ class Piece {
         return representation.substring(0, 1);
     }
 
-    public void addTo(StringBuffer buf) {
+    public void addTo(StringBuilder buf) {
         buf.append(character());
     }
 }</code></pre>
@@ -268,7 +268,7 @@ class Piece {
 // After:
 class Board {
     public String boardRepresentation() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
 
         for (Location location : squares()) {
             location.addTo(buf);
