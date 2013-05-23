@@ -81,22 +81,26 @@
                     </section>
                     <section>
                         <h2>Extract Method</h2>
-                        <pre><code class="java">class Board {
-    public String board() {
-        StringBuilder buf = new StringBuilder();
-        collectRows(buf);
-        return buf.toString();
-    }
+                        <pre><code class="java">public String board() {
+    StringBuilder buf = new StringBuilder();
 
-    private void collectRows(StringBuilder buf) {
-        for (int i = 0; i < 10; i++) { collectRow(buf, i); }
-    }
+    collectRows(buf);
 
-    private void collectRow(StringBuilder buf, int row) {
-        for (int i = 0; i < 10; i++) { buf.append(data[row][i]); }
-        buf.append("\n");
-    }
+    return buf.toString();
 }</code></pre>
+                        <pre><code class="java">private void collectRows(StringBuilder buf) {
+    for (int i = 0; i < 10; i++) {
+        collectRow(buf, i);
+    }
+}
+
+private void collectRow(StringBuilder buf, int row) {
+    for (int i = 0; i < 10; i++) {
+        buf.append(data[row][i]);
+    }
+    buf.append("\n");
+}
+</code></pre>
                         <small>
                             <a href="http://refactoring.com/catalog/extractMethod.html">http://refactoring.com/catalog/extractMethod.html</a>
                         </small>
